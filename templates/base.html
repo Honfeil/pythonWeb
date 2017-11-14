@@ -1,11 +1,61 @@
-<!DOCTYPE html>
-<html lang="ch">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ name }} - My Application</title>
-</head>
-<body>
-    {% block navbar %}{% endblock %}
-    {% block content %}{% endblock %}
-</body>
-</html>
+{% extends "bootstrap/base.html" %}
+{# 包含导航条头部的基模板 #}
+{# 标题 #}
+{#{% block head %}#}
+{#    {{ super() }}#}
+    {% block title %}
+        荭绯
+    {% endblock %}
+{#    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}" type="image/x-icon">#}
+{#    <link rel="icon" href="{{ url_for('static',filename='favicon.ico') }}" type="image/x-icon">#}
+{#{% endblock %}#}
+
+{# 导航栏 #}
+{% block navbar %}
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle"data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                {# 导航栏标题 #}
+                <a class="navbar-brand" href="/">荭绯</a>
+            </div>
+            {# 导航栏内容 #}
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">主页</a></li>
+                    <li><a href="/">博客</a></li>
+                    <li><a href="/">图册</a></li>
+                    <li><a href="/">诗集</a></li>
+                    <li><a href="/">乐谱</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{# 主体内容 #}
+{% block content %}
+    <div class="container">
+        {% for msg in get_flashed_messages() %}
+            {# 闪现消息 #}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ msg }}
+            </div>
+        {% endfor %}
+        {% block page_content %}
+
+        {% endblock %}
+    </div>
+{% endblock %}
+{# 引入js #}
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+    {{ moment.lang('ch') }}
+{% endblock %}
+
